@@ -1,0 +1,18 @@
+services:
+  nginx:
+    image: nginx:stable
+    ports:
+      - "8080:80"
+    volumes:
+      - ./www/elfinder:/var/www/html
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php
+
+  php:
+#    image: php:8.4-fpm
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    image: my-php84-dev:latest
+    volumes:
+      - ./www/elfinder:/var/www/html
